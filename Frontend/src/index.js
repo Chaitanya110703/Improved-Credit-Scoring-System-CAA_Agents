@@ -6,6 +6,7 @@ import Main from "./pages/Main";
 import CreditScore from "./pages/CreditScore";
 import Contact from "./pages/Contact";
 import About from "./pages/About";
+import Loan from "./pages/Loan";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
   {
     path: '/creditscore',
     element: <CreditScore />,
+  },
+  {
+    path: '/loan',
+    element: <Loan />
   },
   {
     path: '/contact',
@@ -37,13 +42,3 @@ root.render(
   </React.StrictMode>
 );
 
-
-//  No. of dependents
-//  Education
-//  Self employed
-//  Income anum
-//  Loan amount - kitna chahiye
-//  Loan Term - no. of days
-//  CIBIL Score
-
-//  Loan status - eligible or not  - to be predicted

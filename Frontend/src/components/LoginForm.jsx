@@ -1,49 +1,78 @@
-import React from "react";
+import React, { useState } from 'react'
 import { useNavigate } from "react-router-dom";
-import FormInput from "./FormInput";
+import FormInput from './FormInput'
+import axios from 'axios'
 
 export default function LoginForm() {
-  const nav = useNavigate();
+  const Navigate = useNavigate();
+  const [loginInfo, setLoginInfo] = useState({
+    username: '',
+    password: ''
+  })
+  const handleSubmit= async(e)=>{
+    e.preventDefault();
+    try {
+      const response = await axios.post('http://localhost:8000/login', loginInfo);
+      const {success, message} = response.data ;
+      if(success){
+        Navigate('/home');
+        // console.log('Login Successful');
+      }else{
+        console.log(message);
+      }
+    } catch (error) {
+      console.error('Login error', error);
+    }
+    setLoginInfo({
+      username:'',
+      password: '',
+    })
+  }
+  function handleChange(event) { 
+    const {name, value} = event.target;
+    setLoginInfo(prevVal=>{
+      return {
+        ...prevVal,
+        [name]: value,
+      }
+    })
+  }
 
   return (
-    <div className="col-md-4 bg-body-tertiary m-5 align-item-center">
-      <h2 className="text-center p-3">CAA Agents</h2>
+    <div className='col-md-4 bg-body-tertiary m-5 align-item-center'>
+      <h2 className='text-center p-3'>CAA Agents</h2>
       <hr />
-      <h4 className="text-center">Login</h4>
+      <h4 className='text-center'>Login</h4>
       <form
-        action=""
-        method=""
-        className="need-validation"
-        enctype="multipart/form-data"
-        novalidate
+        onSubmit={handleSubmit}
+        className='need-validation'
+        encType='multipart/form-data'
+        noValidate
       >
-        <div className="col-md-10 mx-4 p-3">
+        <div className='col-md-10 mx-4 p-3'>
           <FormInput
-            label="Email Address"
-            name="emailId"
-            type="email"
-            placeholder="Enter your email address"
+            label='Username'
+            name='username'
+            type='text'
+            placeholder='Enter your Username'
+            onChange={handleChange}
+            value = {loginInfo.username}
           />
         </div>
-        <div className="col-md-10 mx-4 p-3">
+        <div className='col-md-10 mx-4 p-3'>
           <FormInput
-            label="Password"
-            name="password"
-            type="password"
-            placeholder="Enter your password"
+            label='Password'
+            name='password'
+            type='password'
+            placeholder='Enter your password'
+            onChange={handleChange}
+            value = {loginInfo.password}
           />
         </div>
-        <div className="col-md-10 mx-5 p-3">
-          <button
-            onClick={() => {
-              nav("/home");
-            }}
-            className="btn btn-primary w-75 mx-2"
-          >
-            Submit
-          </button>
+        <div className='col-md-10 mx-5 p-3'>
+          <button className='btn btn-primary w-75 mx-2'>Submit</button>
         </div>
       </form>
     </div>
-  );
+  )
 }
