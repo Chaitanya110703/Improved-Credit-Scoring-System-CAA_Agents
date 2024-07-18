@@ -8,7 +8,6 @@ export default function LoanForm() {
   });
   const [inputInfo, setInputInfo] = useState([]);
 
-  
   function handleChange(event) {
     const { name, value } = event.target;
     setCreditInput((prevVal) => {
@@ -36,95 +35,117 @@ export default function LoanForm() {
       onSubmit={handleSubmit}
     >
       {/* <div className="d-flex justify-content-center"> */}
-      <div className="  ">
-        <div className="col-md-10 p-3 d-flex justify-content-evenly">
-          <div className="col-md-3">
-            <FormInput
-              label="Number of Dependants"
-              type="number"
-              name="dependants"
-              placeholder=""
-              onChange={handleChange}
-            />
-          </div>
-          {/* Education */}
-          <div className="col-md-4">
-            <label
-              htmlFor="education"
-              className="col-md-10 form-label text-center"
-            >
-              Education
-            </label>
-            <div className="d-flex justify-content-center mt-1s">
-              <div className="col-md-6">
-                <input
-                  className="form-check-input"
-                  type="radio"
-                  name="education"
-                  id="Graduate"
-                  value={"Graduate"}
-                  onChange={handleChange}
-                />
-                <label htmlFor="Graduate" className="form-label">
-                  Graduate
-                </label>
-              </div>
-              <div className="col-md-6">
-                <input
-                  className="form-check-input"
-                  type="radio"
-                  name="education"
-                  id="NotGraduate"
-                  value={"Not Graduate"}
-                  onChange={handleChange}
-                />
-                <label htmlFor="NonGraduate" className="form-label">
-                  Non Graduate
-                </label>
+      <div className="d-flex justify-content-center">
+        <div className="col-md-10 bg-body-secondary ">
+          <div className="col-md-12 p-3 d-flex justify-content-evenly">
+            {/* No.Of Dependants */}
+            <div className="col-md-3">
+              <FormInput
+                label="Number of Dependants"
+                type="number"
+                name="dependants"
+                placeholder=""
+                onChange={handleChange}
+              />
+            </div>
+            {/* Education */}
+            <div className="col-md-4 border p-1">
+              <label
+                htmlFor="education"
+                className="col-md-12 fw-bold fs-5 form-label text-center"
+              >
+                Education
+              </label>
+              <div className="d-flex justify-content-center">
+                <div className="col-md-5">
+                  <input
+                    className="form-check-input"
+                    type="radio"
+                    name="education"
+                    id="Graduate"
+                    value={"Graduate"}
+                    onChange={handleChange}
+                  />
+                  <label htmlFor="Graduate" className="form-label">
+                    Graduate
+                  </label>
+                </div>
+                <div className="col-md-5">
+                  <input
+                    className="form-check-input"
+                    type="radio"
+                    name="education"
+                    id="NotGraduate"
+                    value={"Not Graduate"}
+                    onChange={handleChange}
+                  />
+                  <label htmlFor="NonGraduate" className="form-label">
+                    Non Graduate
+                  </label>
+                </div>
               </div>
             </div>
           </div>
-          {/* Self Employed */}
-        </div>
-        <div className="col-md-8 p-3 d-flex justify-content-evenly">
-          <div className="col-md-4 ">
-            <label
-              htmlFor="education"
-              className="col-md-10 form-label text-center"
-            >
-              Self Employed
-            </label>
-            <div className="d-flex justify-content-center mt-1s">
-              <div className="col-md-6">
-                <input
-                  className="form-check-input"
-                  type="radio"
-                  name="selfEmployed"
-                  id="Yes"
-                  value={"Yes"}
-                  onChange={handleChange}
-                />
-                <label htmlFor="Graduate" className="form-label">
-                  YES
-                </label>
-              </div>
-              <div className="col-md-6">
-                <input
-                  className="form-check-input"
-                  type="radio"
-                  name="selfEmployed"
-                  id="No"
-                  value={"No"}
-                  onChange={handleChange}
-                />
-                <label htmlFor="NonGraduate" className="form-label">
-                  NO
-                </label>
+          <div className="col-md-12 p-3 d-flex justify-content-evenly">
+            {/* Self Employed */}
+            <div className="col-md-4 border p-1">
+              <label
+                htmlFor="education"
+                className="col-md-12 fw-bold fs-5 form-label text-center"
+              >
+                Self Employed
+              </label>
+              <div className="d-flex justify-content-center mt-1">
+                <div className="col-md-5 mx-3">
+                  <input
+                    className="form-check-input"
+                    type="radio"
+                    name="selfEmployed"
+                    id="Yes"
+                    value={"Yes"}
+                    onChange={handleChange}
+                  />
+                  <label htmlFor="Graduate" className="form-label">
+                    YES
+                  </label>
+                </div>
+                <div className="col-md-5">
+                  <input
+                    className="form-check-input"
+                    type="radio"
+                    name="selfEmployed"
+                    id="No"
+                    value={"No"}
+                    onChange={handleChange}
+                  />
+                  <label htmlFor="NonGraduate" className="form-label">
+                    NO
+                  </label>
+                </div>
               </div>
             </div>
+            {/* Income anum */}
+            <div className="col-md-3 p-1">
+              <label
+                htmlFor="income"
+                className="col-md-12 fw-bold fs-5 form-label text-center"
+              >
+                Income (Per Annum)
+              </label>
+              <input
+                className="form-control"
+                type="number"
+                name="income_annum"
+                placeholder="example:-50000"
+                onChange={handleChange}
+              />
+            </div>
+          </div>
+          <div className="col-md-12 p-3 d-flex justify-content-evenly">
+            {/* Loan Ammount */}
+            <div className="col-md-4 border p-1"></div>
           </div>
         </div>
-        {/* </div> */}
       </div>
       <div className="p-3 d-flex justify-content-center">
         <button type="submit" className="btn btn-success">
