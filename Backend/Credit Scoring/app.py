@@ -34,9 +34,9 @@ def predict_credit_score():
         
         result = model.predict(np.array([delinq_2yrs, pub_rec, revol_bal, revol_util, days_with_cr_line, inq_last_6mths]).reshape(1, 6))
 
-        return render_template('index.html', result=result[0])
+        return jsonify({'credit_score': result[0]})
     else:
-        return render_template('index.html', result=None, message=f"No data found for username '{username}'")
+        return jsonify({'error': f"No data found for username '{username}'"}), 404
 
 if __name__ == '__main__':
     app.run(port=3000, debug=True)
