@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from "react-router-dom";
 import FormInput from './FormInput'
-import axios from 'axios'
+// import axios from 'axios'
 
 export default function LoginForm() {
   const Navigate = useNavigate();
@@ -12,13 +12,14 @@ export default function LoginForm() {
   const handleSubmit= async(e)=>{
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:8000/login', loginInfo);
-      const {success, message} = response.data ;
+      // const response = await axios.post('http://localhost:8000/login', loginInfo);
+      // const {success, message} = response.data ;
+      const success = true;
       if(success){
         Navigate('/home');
-        // console.log('Login Successful');
+        console.log('Login Successful');
       }else{
-        console.log(message);
+        console.log("Failed to login");
       }
     } catch (error) {
       console.error('Login error', error);

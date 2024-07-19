@@ -24,7 +24,7 @@ export default function Navigation() {
   return ( 
     <nav className="navbar navbar-expand-lg bg-secondary" data-bs-theme="dark">
       <div className="container-fluid d-flex justify-content-evenly">
-        <Link className="navbar-brand" to="/home">
+        <Link className="navbar-brand fs-2" to="/home">
           CAA Agents
         </Link>
         <div className="" id="navbarColor04">
@@ -32,6 +32,7 @@ export default function Navigation() {
             <NavList pages="Home" where="/home" />
             <NavList pages="Credit Score" where="/creditscore" />
             <NavList pages="Loans" where="/loan" />
+            <NavList pages="Ai Assistant" where="/Assistant" />
             <NavList pages="Contact Us" where="/contact" />
             <NavList pages="About Us" where="/about" />
             <NavList textcolor="text-danger" onClick={logout} pages="Logout" />
