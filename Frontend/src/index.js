@@ -7,6 +7,7 @@ import CreditScore from "./pages/CreditScore";
 import Contact from "./pages/Contact";
 import About from "./pages/About";
 import Loan from "./pages/Loan";
+import Assistant from "./pages/Assistant";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
   {
     path: '/About',
     element: <About />
+  },
+  {
+    path: '/Assistant',
+    element: <Assistant />
   }
 ]);
 
