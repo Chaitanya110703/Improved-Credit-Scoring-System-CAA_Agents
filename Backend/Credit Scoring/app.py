@@ -5,15 +5,13 @@ from flask_pymongo import PyMongo
 
 
 model = joblib.load('model_3.joblib')
+scaler = joblib.load('scaler.joblib')
 
 app = Flask(__name__)
 app.config["MONGO_URI"] = "mongodb://localhost:27017/credit_db"
 mongodb_client = PyMongo(app)
 db = mongodb_client.db
 
-@app.route('/')
-def index():
-    return render_template('index.html')
 
 @app.route('/predict', methods=['POST'])
 def predict_credit_score():
@@ -32,7 +30,9 @@ def predict_credit_score():
         inq_last_6mths = data.get('inq_last_6mths', 0.0)
 
         
-        result = model.predict(np.array([delinq_2yrs, pub_rec, revol_bal, revol_util, days_with_cr_line, inq_last_6mths]).reshape(1, 6))
+        input_data  = (np.array([delinq_2yrs,pub_rec, revol_bal,  revol_util,  days_with_cr_line, inq_last_6mths]).reshape(1,6))
+        input_data_normalized = scaler.transform(input_data)
+        result = model.predict(input_data_normalized)
 
         return jsonify({'credit_score': result[0]})
     else:
