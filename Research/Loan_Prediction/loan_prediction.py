@@ -6,16 +6,16 @@ import numpy as np
 app = Flask(__name__)
 CORS(app)
 
-# Load the model and scaler
-model = joblib.load('loan_prediction.pkl')
-scaler = joblib.load('scaler.pkl')
+
+model = joblib.load('Research\Loan_Prediction\loan_prediction_2.joblib')
+scaler = joblib.load('Research\Loan_Prediction\loan_scaler_2.joblib')
 
 @app.route('/predict', methods=['POST'])
 def predict():
-    # Get the data from the POST request
+   
     data = request.get_json()
 
-    # Extract features
+    
     features = np.array([
         data['no_of_dependents'],
         data['cibil_score'],
