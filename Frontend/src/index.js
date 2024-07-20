@@ -8,6 +8,8 @@ import Contact from "./pages/Contact";
 import About from "./pages/About";
 import Loan from "./pages/Loan";
 import Assistant from "./pages/Assistant";
+import CreditSimulator from "./pages/CreditSimulator";
+
 
 const router = createBrowserRouter([
   {
@@ -37,6 +39,10 @@ const router = createBrowserRouter([
   {
     path: '/Assistant',
     element: <Assistant />
+  },
+  {
+    path: '/Simulator',
+    element: <CreditSimulator />
   }
 ]);
 
