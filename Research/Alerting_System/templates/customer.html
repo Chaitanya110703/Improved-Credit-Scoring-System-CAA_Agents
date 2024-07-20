@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Customer Dashboard - {{ customer_name }}</h1>
+    
+    <h2>Alerts</h2>
+    <div id="customer-alert" class="alert-{{ alert }}">
+        {% if alert %}
+            Alert: {{ alert }} ({{ overdue_days }} days overdue)
+        {% else %}
+            No alerts
+        {% endif %}
+    </div>
+    
+    <h2>Current Debts</h2>
+    <div id="customer-debt">
+        <p>Current Debt Amount: {{ current_debt_amount }}</p>
+        <h3>Loan Details</h3>
+        <ul>
+            {% for loan in loan_details %}
+                <li>
+                    Loan ID: {{ loan.loan_id }}, Amount: {{ loan.loan_amount }}, Status: {{ loan.loan_status }}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
