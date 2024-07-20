@@ -7,23 +7,23 @@ app = Flask(__name__)
 CORS(app)
 
 # Load the model and scaler
-model = joblib.load('loan_prediction.pkl')
-scaler = joblib.load('scaler.pkl')
-
-# @app.route('/predict', methods=['POST'])
+model = joblib.load('loan_prediction_2.joblib')
+scaler = joblib.load('loan_scaler_2.joblib')
+print("Model Loaded")
+#@app.route('/predict', methods=['POST'])
 def predict():
     # Get the data from the POST request
     data = request.get_json()
-
+    print("data")
     # Extract features
     features = np.array([
-        data['no_of_dependents'],
-        data['cibil_score'],
-        data['loan_term'],
-        data['education_Graduate'],
-        data['self_employed_Yes'],
-        data['income_annum'],
-        data['loan_amount']
+        data['dependants'],
+        data['cibilScore'],
+        data['loanTerm'],
+        data['education'],
+        data['selfEmployed'],
+        data['income'],
+        data['loanAmount']
     ]).reshape(1, -1)
 
     X_not_scale = features[:, [0, 1, 2, 3, 4]]
@@ -37,5 +37,5 @@ def predict():
 
     return jsonify({'prediction': int(prediction[0])})
 
-# if __name__ == '__main__':
-#     app.run(debug=True)
+#if __name__ == '__main__':
+#   app.run(debug=True, port=9000)

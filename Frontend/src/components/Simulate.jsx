@@ -3,13 +3,40 @@ import FormInput from "./FormInput";
 
 export default function Simulate() {
   const [simulateScore, setSimulateScore] = useState({
-    on_time: "",
-    missed: "",
-    debt: "",
-    limit: "",
-    age: "",
-    inquiries: "",
-    accounts: "",
+    "actions": [
+      {
+          "type": "payment_history",
+          "params": {
+              on_time: "",
+              missed: "",
+          }
+      },
+      {
+          "type": "credit_utilization",
+          "params": {
+              debt: "",
+              limit: "",
+          }
+      },
+      {
+          "type": "credit_history_length",
+          "params": {
+              age: "",
+          }
+      },
+      {
+          "type": "new_credit",
+          "params": {
+              inquiries: "",  
+          }
+      },
+      {
+          "type": "credit_mix",
+          "params": {
+              accounts: "",
+          }
+      }
+  ]
   });
 
   function handleSubmit(e) {

@@ -28,11 +28,14 @@ export default function LoanForm() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:9000/loanPredict",
+        "http://localhost:9000/predict",
         creditInput
       );
-      setScoreOutput(response.data.Loan_Prediction);
-    } catch (error) {}
+      setScoreOutput(response.data.prediction);
+      console.log(response.data)
+    } catch (error) {
+      console.error("error" , error)
+    }
   };
   return (
     <>
@@ -73,7 +76,7 @@ export default function LoanForm() {
                         type="radio"
                         name="education"
                         id="Graduate"
-                        value={"Graduate"}
+                        value={1}
                         onChange={handleChange}
                       />
                       <label htmlFor="Graduate" className="form-label">
@@ -86,7 +89,7 @@ export default function LoanForm() {
                         type="radio"
                         name="education"
                         id="NotGraduate"
-                        value={"Not Graduate"}
+                        value={0}
                         onChange={handleChange}
                       />
                       <label htmlFor="NonGraduate" className="form-label">
@@ -122,7 +125,7 @@ export default function LoanForm() {
                         type="radio"
                         name="selfEmployed"
                         id="Yes"
-                        value={"Yes"}
+                        value={1}
                         onChange={handleChange}
                       />
                       <label htmlFor="Graduate" className="form-label">
@@ -135,7 +138,7 @@ export default function LoanForm() {
                         type="radio"
                         name="selfEmployed"
                         id="No"
-                        value={"No"}
+                        value={0}
                         onChange={handleChange}
                       />
                       <label htmlFor="NonGraduate" className="form-label">
@@ -159,7 +162,7 @@ export default function LoanForm() {
                 {/* Loan Term */}
                 <div className="col-md-4 border p-1">
                   <FormInput
-                    label="Loan Term (in days)"
+                    label="Loan Term (in years)"
                     type="number"
                     name="loanTerm"
                     placeholder=""
