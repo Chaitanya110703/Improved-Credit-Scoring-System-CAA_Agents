@@ -18,7 +18,7 @@ export default function Chatbot() {
         ...newMessages,
         { sender: "bot", text: response.data.response },
       ]);
-      setUserInput("");
+      setUserInput(" ");
     } catch (error) {
       console.error("ERROR", error);
     }
