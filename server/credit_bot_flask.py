@@ -1,22 +1,18 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 import random
+import pandas as pd
 from difflib import SequenceMatcher
 
-# app = Flask(__name__)
-# CORS(app)  # This will enable CORS for this route
+app = Flask(__name__)
+CORS(app)  # This will enable CORS for all routes
 
-patterns_responses = {
-    "hi": ["Hello, How can I help you?"],
-    "What is a credit score?": ["A credit score is a numerical representation of your creditworthiness, based on your credit history."],
-    "How is a credit score calculated?": ["A credit score is calculated based on factors such as payment history, amounts owed, length of credit history, new credit, and types of credit used."],
-    "What is a good credit score?": ["A good credit score typically ranges from 670 to 739, but this can vary depending on the scoring model."],
-    "Why is my credit score important?": ["Your credit score affects your ability to get loans, credit cards, and can influence the interest rates you receive."],
-    "How can I improve my credit score?": ["Pay your bills on time, reduce your debt, avoid opening too many new accounts, and check your credit report for errors."],
-    "How long does it take to improve a credit score?": ["The time it takes to improve a credit score can vary, but significant improvements typically take several months of consistent positive credit behavior."],
-    "Does checking my credit score hurt it?": ["Checking your own credit score is considered a soft inquiry and does not hurt your score."],
-    "What information is on a credit report?": ["A credit report includes personal information, credit accounts, credit inquiries, and public records such as bankruptcies."],
-}
+# Load the CSV file
+  # Update the path to your CSV file
+qa_data = pd.read_csv('credit_score_info_full.csv')
+
+# Convert the data into a dictionary for quick lookup
+patterns_responses = dict(zip(qa_data['questions'], qa_data['answers']))
 
 fallback_responses = [
     "I'm sorry, I didn't understand that. How can I assist you?",
@@ -31,32 +27,26 @@ def respond(input_text):
     max_similarity = 0
     best_match_response = random.choice(fallback_responses)
     for pattern, responses in patterns_responses.items():
-        similarity = similar(input_text, pattern)
+        similarity = similar(input_text, pattern.lower())
         if similarity > max_similarity:
             max_similarity = similarity
-            best_match_response = random.choice(responses)
+            best_match_response = responses
     return best_match_response
 
-# @app.route('/chat', methods=['POST'])
-# def chat():
-#     data = request.json
-#     user_input = data.get('message')
-#     chat = respond(user_input)
-#     return jsonify({'response': chat})
-
-# @app.route('/chat', methods=['POST'])
+@app.route('/chat', methods=['POST'])
 def chat():
-    try:
-        data = request.json
-        user_input = data.get('message')
-        if not user_input:
-            return jsonify({'response': "Please provide a message."}), 400
-        response = respond(user_input)
-        return jsonify({'response': response})
-    except Exception as e:
-        print(f"Error: {e}")
-        return jsonify({'response': "An error occurred."}), 500
+    data = request.json
+    user_input = data.get('message')
+    response = respond(user_input)
+    return jsonify({'response': response})
 
+# @app.route('/', methods=['GET', 'POST'])
+# def index():
+#     if request.method == 'POST':
+#         question = request.form.get('question')
+#         answer = respond(question)
+#         return render_template('credit_bot_index.html', question=question, answer=answer)
+#     return render_template('credit_bot_index.html')
 
 # if __name__ == "__main__":
-#     app.run(debug=True, port=9000)
+#     app.run(debug=True)
