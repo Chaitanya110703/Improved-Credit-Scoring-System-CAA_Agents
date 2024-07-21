@@ -47,6 +47,7 @@ Our credit scoring and loan prediction system uses technologies like AI and mach
 3. **Install the dependencies**:
     ```
     cd frontend
+    npm i
     npm install
     npm start
 4.  **Start the backend server**:
