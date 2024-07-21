@@ -5,7 +5,7 @@ import axios from "axios";
 export default function AdminPanel() {
   const [isValid, setIsValid] = useState(false);
   const [creditInput, setCreditInput] = useState({
-    Customer_Name: "",
+    Admin_Name: "",
     Password: "",
   });
   // const [resultData, setResultData] = useState([]);
@@ -52,7 +52,7 @@ export default function AdminPanel() {
                   <FormInput
                     label="Admin :"
                     type="text"
-                    name="Customer_Name"
+                    name="Admin_Name"
                     placeholder=""
                     onChange={handleChange}
                   />
