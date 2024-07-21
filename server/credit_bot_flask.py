@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify
 from flask_cors import CORS
 import random
 import pandas as pd
@@ -8,7 +8,7 @@ app = Flask(__name__)
 CORS(app)  # This will enable CORS for all routes
 
 # Load the CSV file
-  # Update the path to your CSV file
+# Update the path to your CSV file
 qa_data = pd.read_csv('credit_score_info_full.csv')
 
 # Convert the data into a dictionary for quick lookup
@@ -26,27 +26,24 @@ def respond(input_text):
     input_text = input_text.lower()
     max_similarity = 0
     best_match_response = random.choice(fallback_responses)
-    for pattern, responses in patterns_responses.items():
+    for pattern, response in patterns_responses.items():
         similarity = similar(input_text, pattern.lower())
         if similarity > max_similarity:
             max_similarity = similarity
-            best_match_response = responses
+            best_match_response = response
     return best_match_response
 
 # @app.route('/chat', methods=['POST'])
 def chat():
-    data = request.json
-    user_input = data.get('message')
-    response = respond(user_input)
-    return jsonify({'response': response})
+    try:
+        data = request.json
+        user_input = data.get('message')
+        if not user_input:
+            return jsonify({'response': "Please provide a message."}), 400
+        response = respond(user_input)
+        return jsonify({'response': response})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
-# @app.route('/', methods=['GET', 'POST'])
-# def index():
-#     if request.method == 'POST':
-#         question = request.form.get('question')
-#         answer = respond(question)
-#         return render_template('credit_bot_index.html', question=question, answer=answer)
-#     return render_template('credit_bot_index.html')
-
-# if __name__ == "__main__":
-#     app.run(debug=True)
+# if __name__ == '__main__':
+#     app.run(port=9000, debug=True)

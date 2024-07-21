@@ -96,9 +96,9 @@ def admin_dashboard():
 
             alert = None
             if is_npa(max_overdue_days, dti, fico, pub_rec, loan_statuses):
-                alert = 'Account is NPA'
+                alert = 'red'
             elif max_overdue_days >= ALERT_THRESHOLDS['orange']:
-                alert = 'Customer has debt to be paid.'
+                alert = 'orange'
             elif max_overdue_days >= ALERT_THRESHOLDS['yellow']:
                 alert = 'yellow'
             else:

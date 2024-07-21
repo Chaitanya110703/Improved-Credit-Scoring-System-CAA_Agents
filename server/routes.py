@@ -26,11 +26,11 @@ def chat_route():
 def simulate_route():
     return simulate()
 
-@app.route('/predict', methods=['POST'])
+@app.route('/creditScorePredictor', methods=['POST'])
 def predict_route():
     return predict_credit_score()
 
-@app.route('/loanPredict', methods=['POST'])
+@app.route('/loanEligibility', methods=['POST'])
 def loanPredict_route():
     return predict()
 

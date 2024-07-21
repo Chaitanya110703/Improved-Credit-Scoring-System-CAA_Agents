@@ -1,22 +1,31 @@
 import React, { useState } from "react";
-import CreditCard from "../components/CreditCard";
 import FormInput from "./FormInput";
 import axios from "axios";
 import ResultDisplay from "./ResultDisplay";
-import CustomerView from "./CustomerView";
 import LoanCard from "./LoanCard";
+import DataPiece from "./DataPiece";
 
 export default function FormCredit() {
   const [isValid, setIsValid] = useState(false);
   const [creditInput, setCreditInput] = useState({
-    Customer_Name: "",
-    Password: "",
+    Customer_Name: ""
   });
-  // const [inputInfo, setInputInfo] = useState([]);
-  function handleSubmit(e) {
+  const [customerDetails, setCustomerDetails] = useState(null);
+  const [creditScorePredictor, setCreditScorePredictor] = useState(null);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = axios.post("/customer", creditInput);
-  }
+    try {
+      const response = await axios.post("http://localhost:9000/customer", creditInput);
+      setCreditInput(response.data);
+      setIsValid(response.data.isValid);
+      if (response.data.customerDetails && response.data.customerDetails.length > 0) {
+        setCustomerDetails(response.data.customerDetails[0]);
+      }
+    } catch (error) {
+      console.error("ERROR :" + error);
+    }
+  };
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -29,13 +38,36 @@ export default function FormCredit() {
     });
   }
 
+  const handleCheckCreditScore = async (e) => {
+    e.preventDefault();
+    if (!customerDetails) {
+      console.error("No customer details available");
+      return;
+    }
+
+    const predictorData = {
+      delinq_2yrs: customerDetails.delinq_2yrs,
+      pub_rec: customerDetails.pub_rec,
+      revol_bal: customerDetails.revol_bal,
+      revol_util: customerDetails.revol_util,
+      days_with_cr_line: customerDetails.days_with_cr_line,
+      inq_last_6mths: customerDetails.inq_last_6mths,
+    };
+
+    try {
+      const response = await axios.post("http://localhost:9000/creditScorePredictor", predictorData);
+      setCreditScorePredictor(response.data.credit_score); // Assuming the response contains the predicted credit score
+    } catch (error) {
+      console.error("Error sending credit score data:", error);
+    }
+  };
+
+
   return (
     <>
       <div className="d-flex justify-content-center">
         <div className="col-md-11 border p-2 bg-body-secondary rounded-4">
           <form
-            action=""
-            method=""
             className="need-validation mt-5"
             noValidate
             encType="multipart/form-data"
@@ -70,29 +102,64 @@ export default function FormCredit() {
           </form>
         </div>
       </div>
-      {isValid ? (
+      {isValid && customerDetails && (
         <>
-          <CustomerView
-            cName={"Atharva"}
-            income={100000}
-            timeOrMissed={"1"}
-            installment={6}
-            deptAmt={80000}
-            intRate={7.5}
-            dueDate={"06-07-23"}
-          />
-          <ResultDisplay
-            statement={"Your CIBIL Score Is:"}
-            information={"750"}
-          />
+          <div className="mt-5 d-flex justify-content-center">
+            <div className="col-md-11 border p-3 bg-body-secondary rounded-4">
+              <div className="col-md-12 d-flex justify-content-between">
+                <div className="col-md-5 p-5">
+                  <h2 className="fw-bolder text-center">
+                    {customerDetails.Customer_Name}
+                  </h2>
+                </div>
+                <div className="col-md-5 p-5">
+                  <h3 className="fw-bolder text-end">Notify</h3>
+                </div>
+              </div>
+              <hr />
+              <div className="my-5">
+                <DataPiece
+                  title="Annual Income"
+                  info={customerDetails.loan_details[0].income_annum}
+                />
+                <DataPiece
+                  title="On-Time Or Missed"
+                  info={JSON.stringify(customerDetails.on_time_payments_or_missed)}
+                />
+                <DataPiece
+                  title="Current Debt Amt"
+                  info={customerDetails.current_debt_amount}
+                />
+                <DataPiece
+                  title="Interest Rate"
+                  info={customerDetails.int_rate}
+                />
+                <DataPiece
+                  title="Over Due Date"
+                  info={creditInput.overdue_days}
+                />
+              </div>
+              <br />
+              <hr />
+              <div className="col-md-12 d-flex justify-content-center p-3">
+                <button
+                  type="button"
+                  className="btn btn-primary p-3 rounded-5"
+                  onClick={handleCheckCreditScore}
+                >
+                  <span className="fs-5">Check Your Credit Score</span>
+                </button>
+              </div>
+              <span className="col-md-12 d-flex justify-content-center fs-6 fw-lighter text-warning">
+                Check your Credit score Below 👇
+              </span>
+            </div>
+          </div>
+          {creditInput.alert}
+          <ResultDisplay statement={"Your CIBIL Score Is:"} information={creditScorePredictor} />
           <LoanCard />
         </>
-      ) : (
-        ""
       )}
-      {/* Customer View */}
-
-      {/* CIBIL Score */}
     </>
   );
 }

@@ -10,7 +10,7 @@ CORS(app)
 model = joblib.load('loan_prediction_2.joblib')
 scaler = joblib.load('loan_scaler_2.joblib')
 print("Model Loaded")
-#@app.route('/predict', methods=['POST'])
+
 def predict():
     # Get the data from the POST request
     data = request.get_json()
@@ -36,6 +36,3 @@ def predict():
     prediction = model.predict(features)
 
     return jsonify({'prediction': int(prediction[0])})
-
-#if __name__ == '__main__':
-#   app.run(debug=True, port=9000)

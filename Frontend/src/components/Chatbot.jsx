@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
+import '../pages/Chatbot.css';
 
 export default function Chatbot() {
   const [chatMessages, setChatMessages] = useState([]);
@@ -18,7 +19,7 @@ export default function Chatbot() {
         ...newMessages,
         { sender: "bot", text: response.data.response },
       ]);
-      setUserInput(" ");
+      setUserInput(""); // Clear the input after sending
     } catch (error) {
       console.error("ERROR", error);
     }
@@ -30,7 +31,7 @@ export default function Chatbot() {
 
   return (
     <div className="col-md-8 p-2">
-      <div className="border bg-dark text-dark p-2" style={{ height: "75vh" }}>
+      <div className="border bg-dark text-white p-2" style={{ height: "75vh" }}>
         <div className="border p-3" style={{ height: "62vh", overflowY: "scroll" }}>
           <div className="chatArea col-md-12">
             {chatMessages.map((message, index) => (
@@ -43,7 +44,7 @@ export default function Chatbot() {
           </div>
         </div>
         <form onSubmit={handleChatSubmit}>
-          <div className="d-flex justify-content-between">
+          <div className="d-flex justify-content-evenly">
             <div className="col-md-8 mx-3 mt-3">
               <input
                 className="form-control bg-dark text-white"

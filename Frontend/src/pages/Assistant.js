@@ -10,8 +10,11 @@ export default function Assistant() {
         <h1 className="fw-bolder text-center p-1">
           Ask Our <span className="text-info">Ai Assistant</span>
         </h1>
-        <div className="d-flex justify-content-center">
+        <div className="d-flex justify-content-end">
           <Chatbot />
+          <div className="col-md-2 d-flex">
+            <span className="text-danger fs-6 fw-lighter">*Warning*:- Change of page will result in loss of chat history</span>
+          </div>
         </div>
       </div>
     </main>
