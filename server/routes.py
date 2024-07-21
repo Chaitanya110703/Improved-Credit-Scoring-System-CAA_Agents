@@ -17,7 +17,7 @@ from credit_simulator import simulate
 from Credit_Score import predict_credit_score
 from Loan_Prediction import predict
 from alert import customer_dashboard,admin_dashboard
-
+from Loan_Recommender import get_loan_rates
 @app.route('/chat', methods=['POST'])
 def chat_route():
     return chat()
@@ -41,6 +41,10 @@ def customer_details():
 @app.route('/admin', methods=['POST'])
 def admin_panel():
     return admin_dashboard()
+
+@app.route('/loan_recommend', methods=['POST'])
+def loan_recommender():
+    return get_loan_rates()
 
 if __name__ == "__main__":
     app.run(debug=True, port=9000)
