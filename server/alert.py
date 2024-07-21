@@ -101,6 +101,8 @@ def admin_dashboard():
                 alert = 'Customer has debt to be paid.'
             elif max_overdue_days >= ALERT_THRESHOLDS['yellow']:
                 alert = 'yellow'
+            else:
+                alert = 'green'
             
             alerts.append({
                 'customer': customer['Customer_Name'],
