@@ -29,8 +29,8 @@ export default function Chatbot() {
   };
 
   return (
-    <div className="col-md-5 p-2">
-      <div className="border bg-light text-dark p-2" style={{ height: "75vh" }}>
+    <div className="col-md-8 p-2">
+      <div className="border bg-dark text-dark p-2" style={{ height: "75vh" }}>
         <div className="border p-3" style={{ height: "62vh", overflowY: "scroll" }}>
           <div className="chatArea col-md-12">
             {chatMessages.map((message, index) => (
@@ -44,7 +44,7 @@ export default function Chatbot() {
         </div>
         <form onSubmit={handleChatSubmit}>
           <div className="d-flex justify-content-between">
-            <div className="col-md-9 mx-3 mt-3">
+            <div className="col-md-8 mx-3 mt-3">
               <input
                 className="form-control bg-dark text-white"
                 type="text"
@@ -55,7 +55,7 @@ export default function Chatbot() {
               />
             </div>
             <div className="col-md-2 mt-3">
-              <button className="btn btn-success">Send</button>
+              <button className="btn w-100 btn-success">Send</button>
             </div>
           </div>
         </form>

@@ -12,7 +12,7 @@ export default function ContactInfo(){
                     <h5>Anushka Mokashi</h5><p>Email: <a href="mailto:anushkamokashi@gmail.com">anushkamokashi@gmail.com</a></p>
                 </li>
                 <li>
-                    <h5>Chaitanya Dond</h5><p>Email: <a href="mailto:chaitanyadond@gmail.com">chaitanyadond@gmail.com</a></p>
+                    <h5>Chaitanya Dond</h5><p>Email: <a href="mailto:chaitanyadond@gmail.com">dondchaitanya@gmail.com</a></p>
                 </li>
             </ul>
         </div>
