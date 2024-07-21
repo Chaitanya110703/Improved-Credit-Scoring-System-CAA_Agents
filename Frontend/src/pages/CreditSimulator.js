@@ -8,7 +8,7 @@ export default function CreditSimulator() {
       <Navigation />
       <div className="container bg-body-tertiary mt-3">
         <h1 className="fw-bolder text-center p-3">
-          Know Your <span className="text-info">Credit Scores</span>
+        <span className="text-info">Credit Score</span> Simulator 
         </h1>
         <hr />
         <Simulate />

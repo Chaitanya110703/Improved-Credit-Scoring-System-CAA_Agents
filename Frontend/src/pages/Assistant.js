@@ -6,9 +6,11 @@ export default function Assistant() {
   return (
     <main className="vh-100">
       <Navigation />
-      <div className="container bg-body-tertiary mt-5">
+      <div className="container bg-body-tertiary mt-4">
+        <h1 className="fw-bolder text-center p-1">
+          Ask Our <span className="text-info">Ai Assistant</span>
+        </h1>
         <div className="d-flex justify-content-center">
-          <div className="col-md-7">sjsjsj</div>
           <Chatbot />
         </div>
       </div>

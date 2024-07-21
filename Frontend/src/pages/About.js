@@ -14,7 +14,6 @@ export default function About() {
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga atque alias impedit deserunt magnam quis unde itaque similique deleniti eaque possimus enim suscipit quam assumenda laboriosam veniam mollitia, repudiandae amet?</p>
             </div>
         </div>
-        <h1 className="text-center">Anushka Bro Parameters When?!?!? 💀💀</h1>
       </div>
     </main>
   );

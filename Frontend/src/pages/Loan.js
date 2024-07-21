@@ -10,7 +10,7 @@ export default function Loan() {
       <Navigation />
       <div className="container bg-body-tertiary mt-5">
         <h1 className="fw-bolder text-center p-3">
-          Know Your <span className="text-info">Credit Scores</span>
+          Check Your <span className="text-info">Loan Eligibility</span>
         </h1>
         <hr />
         <LoanForm />
