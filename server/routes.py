@@ -35,11 +35,11 @@ def loanPredict_route():
     return predict()
 
 @app.route('/customer', methods=['POST'])
-def loanPredict_route():
+def customer_details():
     return customer_dashboard()
 
 @app.route('/admin', methods=['POST'])
-def loanPredict_route():
+def admin_panel():
     return admin_dashboard()
 
 if __name__ == "__main__":
