@@ -14,9 +14,9 @@ db = mongodb_client.db
 # Import your other routes or functions
 from credit_bot_flask import chat
 from credit_simulator import simulate
-from app import predict_credit_score
+from Credit_Score import predict_credit_score
 from Loan_Prediction import predict
-
+from alert import customer_dashboard,admin_dashboard
 
 @app.route('/chat', methods=['POST'])
 def chat_route():
@@ -33,6 +33,14 @@ def predict_route():
 @app.route('/loanPredict', methods=['POST'])
 def loanPredict_route():
     return predict()
+
+@app.route('/customer', methods=['POST'])
+def loanPredict_route():
+    return customer_dashboard()
+
+@app.route('/admin', methods=['POST'])
+def loanPredict_route():
+    return admin_dashboard()
 
 if __name__ == "__main__":
     app.run(debug=True, port=9000)

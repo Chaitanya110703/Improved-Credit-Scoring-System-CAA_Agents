@@ -33,7 +33,7 @@ def respond(input_text):
             best_match_response = responses
     return best_match_response
 
-@app.route('/chat', methods=['POST'])
+# @app.route('/chat', methods=['POST'])
 def chat():
     data = request.json
     user_input = data.get('message')
