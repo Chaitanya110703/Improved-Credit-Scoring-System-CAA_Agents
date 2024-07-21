@@ -9,20 +9,25 @@ import About from "./pages/About";
 import Loan from "./pages/Loan";
 import Assistant from "./pages/Assistant";
 import CreditSimulator from "./pages/CreditSimulator";
+import Admin from "./pages/Admin";
 
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/login",
     element: <Login />,
   },
   {
-    path: '/home',
+    path: '/',
     element: <Main />,
   },
   {
     path: '/creditscore',
     element: <CreditScore />,
+  },
+  {
+    path:'/admin',
+    element: <Admin />
   },
   {
     path: '/loan',
