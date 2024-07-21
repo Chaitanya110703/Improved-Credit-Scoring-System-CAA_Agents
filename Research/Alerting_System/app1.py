@@ -2,15 +2,15 @@ from flask import Flask, jsonify, request, render_template
 from flask_cors import CORS
 from pymongo import MongoClient
 from datetime import datetime
-
+import numpy as np
 app = Flask(__name__)
 CORS(app)
 
 # Connect to MongoDB
 client = MongoClient('mongodb://localhost:27017/')
 db = client['CreditScoreDb']
-customers_collection = db['Customers']
-admins_collection = db['Admins']
+customers_collection = db['customers']
+admins_collection = db['admins']
 
 # Define alert thresholds
 ALERT_THRESHOLDS = {
@@ -93,9 +93,10 @@ def admin_dashboard():
         return jsonify({"error": str(e)}), 500
 
 # Customer Route
-@app.route('/customer/<customer_name>')
+@app.route('/customer')
 def customer_dashboard(customer_name):
     try:
+        
         customer = customers_collection.find_one({'Customer_Name': customer_name})
         if not customer:
             print(f"Customer not found: {customer_name}")
@@ -125,10 +126,20 @@ def customer_dashboard(customer_name):
         
         current_debt_amount = sum(loan.get('loan_amount', 0) for loan in customer.get('loan_details', []))
         loan_details = customer.get('loan_details', [])
-        return render_template('customer.html', customer_name=customer_name, alert=alert, overdue_days=max_overdue_days, current_debt_amount=current_debt_amount, loan_details=loan_details)
+
+        log_annual_income = customer.get('annual_income',0)
+        annual_income = np.exp(log_annual_income)
+
+        cust_json = {"customer_name": customer_name, "alert":alert, "overdue_days":max_overdue_days, "current_debt_amount": current_debt_amount, "loan_details": loan_details, "annual_income": annual_income, "on_or_missed": customer.get('on_time_payments_or_missed',0),"installment":customer.get('installment',0), "current_debt": customer.get('current_debt_amount', 0),"int_rate":customer.get('int_rate',0) }
+        return cust_json
     except Exception as e:
         print(f"Error in customer_dashboard: {e}")
         return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port = 9000)
+
+
+    
+
+

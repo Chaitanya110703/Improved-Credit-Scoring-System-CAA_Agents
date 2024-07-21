@@ -8,7 +8,7 @@ model = joblib.load('model_3.joblib')
 scaler = joblib.load('scaler.joblib')
 
 app = Flask(__name__)
-app.config["MONGO_URI"] = "mongodb://localhost:27017/credit_db"
+app.config["MONGO_URI"] = "mongodb://localhost:27017/CreditScoreDb"
 mongodb_client = PyMongo(app)
 db = mongodb_client.db
 
@@ -16,10 +16,11 @@ db = mongodb_client.db
 # @app.route('/predict', methods=['POST'])
 def predict_credit_score():
     username = request.form.get('username')
-    print(username)
+    password = request.form.get('password')
+    
    
-    data = db.credit_db.find_one({'username': username})
-
+    data = db.customers.findOne({'Customer_Name': username})
+    
     if data:
         
         delinq_2yrs = data.get('delinq_2yrs', 0)
@@ -38,5 +39,5 @@ def predict_credit_score():
     else:
         return jsonify({'error': f"No data found for username '{username}'"}), 404
 
-# if __name__ == '__main__':
-#     app.run(port=3000, debug=True)
+if __name__ == '__main__':
+     app.run(port=3000, debug=True)

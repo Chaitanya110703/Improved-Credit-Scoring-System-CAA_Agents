@@ -4,40 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
     <h1>Admin Dashboard</h1>
-    
-    <h2>Alerts</h2>
-    <ul id="alert-list">
+    <table border="1">
+        <tr>
+            <th>Customer Name</th>
+            <th>Alert</th>
+            <th>Overdue Days</th>
+            <th>Current Debt Amount</th>
+        </tr>
         {% for alert in alerts %}
-            <li class="alert-{{ alert.alert }}">
-                {{ alert.customer }} - {{ alert.alert }} ({{ alert.overdue_days }} days overdue)
-            </li>
+        <tr>
+            <td>{{ alert.customer }}</td>
+            <td>{{ alert.alert }}</td>
+            <td>{{ alert.overdue_days }}</td>
+            <td>{{ alert.current_debt_amount }}</td>
+        </tr>
         {% endfor %}
-    </ul>
-    
-    <h2>All Customers</h2>
-    <table id="customer-table">
-        <thead>
-            <tr>
-                <th>Customer Name</th>
-                <th>Due Date Current Debt</th>
-                <th>Current Debt Amount</th>
-                <th>Alert</th>
-            </tr>
-        </thead>
-        <tbody id="customer-list">
-            {% for customer in customers %}
-                <tr class="alert-{{ customer.alert }}">
-                    <td>{{ customer.Customer_Name }}</td>
-                    <td>{{ customer.due_date_current_debt }}</td>
-                    <td>{{ customer.current_debt_amount }}</td>
-                    <td>{{ customer.alerts or 'none' }}</td>
-                </tr>
-            {% endfor %}
-        </tbody>
     </table>
 </body>
 </html>
