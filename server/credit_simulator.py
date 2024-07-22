@@ -38,32 +38,26 @@ class CreditScoreSimulator:
         elif number_of_accounts < 2:
             self.credit_score -= 10
 
-    def simulate(self, actions):
-        for action in actions:
-            action_type = action['type']
-            params = action['params']
-            if action_type == 'payment_history':
-                self.apply_payment_history(params['on_time'], params['missed'])
-            elif action_type == 'credit_utilization':
-                self.apply_credit_utilization(params['debt'], params['limit'])
-            elif action_type == 'credit_history_length':
-                self.apply_length_of_credit_history(params['age'])
-            elif action_type == 'new_credit':
-                self.apply_new_credit(params['inquiries'])
-            elif action_type == 'credit_mix':
-                self.apply_credit_mix(params['accounts'])
-        
+    def simulate(self, data):
+        if 'on_time' in data and 'missed' in data:
+            self.apply_payment_history(data['on_time'], data['missed'])
+        if 'debt' in data and 'limit' in data:
+            self.apply_credit_utilization(data['debt'], data['limit'])
+        if 'age' in data:
+            self.apply_length_of_credit_history(data['age'])
+        if 'inquiries' in data:
+            self.apply_new_credit(data['inquiries'])
+        if 'accounts' in data:
+            self.apply_credit_mix(data['accounts'])
+
         return self.credit_score
 
-@app.route('/simulate', methods=['POST'])
+# @app.route('/simulate', methods=['POST'])
 def simulate():
-    try:
-        data = request.json
-        simulator = CreditScoreSimulator()
-        final_score = simulator.simulate(data['actions'])
-        return jsonify({'final_score': final_score})
-    except Exception as e:
-        return jsonify({'error': str(e)}), 400
+    data = request.json
+    simulator = CreditScoreSimulator()
+    final_score = simulator.simulate(data)
+    return jsonify({'final_score': final_score})
 
-if __name__ == '__main__':
-    app.run(debug=True)
+# if __name__ == '__main__':
+#     app.run(debug=True, port=9000)

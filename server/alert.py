@@ -68,7 +68,9 @@ def admin_dashboard():
         aName = data.get('Admin_Name')
         admin = admins_collection.find_one({'name': aName})
         print("aName:", aName)
+        isValid = "true"
         if not admin:
+            isValid= "false"
             print(f"Admin not found: {aName}")
             return "Admin not found", 404
 
@@ -110,9 +112,17 @@ def admin_dashboard():
                 'overdue_days': max_overdue_days,
                 'current_debt_amount': customer.get('current_debt_amount', 0)
             })
+            
+            
+        admin_json = {
+            "customerDetails": [convert_to_serializable(customer)],
+            "alerts" : alerts,
+            "isValid": isValid
+        }
 
         print("Alerts:", alerts)  # Debugging
-        return jsonify({"alerts": alerts})
+        return jsonify({"Customer_Info": admin_json})
+    
     
     except Exception as e:
         print(f"Error in admin_dashboard: {e}")
