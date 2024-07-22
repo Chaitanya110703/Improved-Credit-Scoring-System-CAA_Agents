@@ -6,25 +6,26 @@ import LoanRecommender from "./LoanRecommender";
 
 export default function Simulate() {
   const [simulateScore, setSimulateScore] = useState({
-    on_time:  0,
+    on_time: 0,
     missed: 0,
-    debt:0 ,
-    limit:0 ,
+    debt: 0,
+    limit: 0,
     age: 0,
     inquiries: 0,
-    accounts: 0 ,
+    accounts: 0,
   });
 
   const [finalScore, setFinalScore] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("Submitting simulation data:", simulateScore); // Debug log
     try {
-      // Wrap the simulateScore in an array
       const response = await axios.post(
         "http://localhost:9000/simulate",
-        [simulateScore] // Send simulateScore as an array
+        simulateScore // Send simulateScore directly
       );
+      console.log("Response data:", response.data); // Debug log
       setFinalScore(response.data.final_score);
     } catch (error) {
       console.error("ERROR", error);
@@ -33,20 +34,21 @@ export default function Simulate() {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    const intValue = parseInt(value,10);
+    const intValue = parseInt(value, 10);
     if (!isNaN(intValue)) {
-    setSimulateScore((prevVal) => ({
-      ...prevVal,
-      [name]: intValue,
-    }));
-  }
+      setSimulateScore((prevVal) => ({
+        ...prevVal,
+        [name]: intValue,
+      }));
+      console.log(`Updated ${name} to`, intValue); // Debug log
+    }
   };
 
   return (
     <>
       <div className="d-flex justify-content-center">
         <div className="col-md-11 border p-2 bg-body-secondary rounded-4">
-          <form action="" onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit}>
             <div className="col-md-10 bg-body-secondary container">
               <div className="mt-3">
                 <div className="col-md-12 d-flex justify-content-evenly p-3">
@@ -126,11 +128,15 @@ export default function Simulate() {
           </form>
         </div>
       </div>
-      <ResultDisplay
-        statement={"Predicted Credit Score :"}
-        information={finalScore}
-      />
-      <LoanRecommender creditScore={finalScore} />
+      {finalScore !== null && (
+        <>
+          <ResultDisplay
+            statement={"Predicted Credit Score :"}
+            information={finalScore}
+          />
+          <LoanRecommender creditScore={finalScore} />
+        </>
+      )}
     </>
   );
 }
