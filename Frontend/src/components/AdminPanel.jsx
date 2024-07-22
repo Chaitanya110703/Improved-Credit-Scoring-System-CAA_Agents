@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import FormInput from "./FormInput";
 import axios from "axios";
+import CustomerTable from "./CustomerTable";
+import WarningTable from "./WarningTable";
 
 export default function AdminPanel() {
   const [isValid, setIsValid] = useState(false);
@@ -8,7 +10,8 @@ export default function AdminPanel() {
     Admin_Name: "",
     Password: "",
   });
-  // const [resultData, setResultData] = useState([]);
+  const [resultData, setResultData] = useState();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -17,7 +20,8 @@ export default function AdminPanel() {
         "http://localhost:9000/admin",
         creditInput
       );
-      setCreditInput(response.data);
+      setResultData(response.data.Customer_Info);
+      setIsValid(response.data.Customer_Info.isValid === "true");
     } catch (error) {
       console.error("Error", error);
     }
@@ -33,6 +37,13 @@ export default function AdminPanel() {
       };
     });
   }
+
+  const filteredAlerts =
+    resultData?.alerts?.filter((alert) =>
+      ["yellow", "orange", "red"].includes(alert.alert)
+    ) || [];
+
+  const bgStyle = null;
 
   return (
     <>
@@ -75,7 +86,7 @@ export default function AdminPanel() {
           </form>
         </div>
       </div>
-      {isValid ? (
+      {isValid && resultData && (
         <div className="mt-5 d-flex justify-content-center">
           <div className="col-md-11 border p-3 bg-body-secondary rounded-4">
             <div className="col-md-12 d-flex justify-content-between">
@@ -87,61 +98,21 @@ export default function AdminPanel() {
               </div>
             </div>
             <hr />
-            <div className="d-flex justify-content-center">
-              <div className="col-md-10">
-                <h3 className="py-3 text-danger">WARNINGS :</h3>
-                <div className="col-md-8">
-                  <ul>
-                    <li>Yeh mera scam</li>
-                    <li>Yeh mera scam</li>
-                    <li>Yeh mera scam</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
+            <WarningTable
+              filterLength={filteredAlerts.length}
+              filteredAlerts={filteredAlerts}
+              resultData={resultData}
+            />
             <hr />
-            {/* table */}
-            <div className="d-flex justify-content-center">
-              <div className="col-md-10">
-                <h3 className="py-3">All Customers</h3>
-                <table class="table table-bordered">
-                  <thead>
-                    <tr>
-                      <th scope="col">Sr.</th>
-                      <th scope="col">Customer Name</th>
-                      <th scope="col">Due Date Of Current Installments</th>
-                      <th scope="col">current Installment Amount</th>
-                      <th scope="col">Status of Overdue</th>
-                      <th scope="col">Alert</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <th scope="row">1</th>
-                      <td>Mark</td>
-                      <td>Otto</td>
-                      <td>@mdo</td>
-                      <td>@mdo</td>
-                      <td>@mdo</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">1</th>
-                      <td>Mark</td>
-                      <td>Otto</td>
-                      <td>@mdo</td>
-                      <td>@mdo</td>
-                      <td>@mdo</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+            {/* Customer Table */}
+            <CustomerTable
+              resultData={resultData}
+              resultLength={resultData.customerDetails.length}
+            />
             <br />
             <hr />
           </div>
         </div>
-      ) : (
-        ""
       )}
     </>
   );

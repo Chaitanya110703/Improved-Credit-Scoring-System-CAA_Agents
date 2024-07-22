@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import FormInput from "./FormInput";
 import axios from "axios";
 import ResultDisplay from "./ResultDisplay";
+import LoanRecommender from "./LoanRecommender";
 
 export default function Simulate() {
   const [simulateScore, setSimulateScore] = useState({
@@ -19,9 +20,10 @@ export default function Simulate() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      // Wrap the simulateScore in an array
       const response = await axios.post(
         "http://localhost:9000/simulate",
-        simulateScore
+        [simulateScore] // Send simulateScore as an array
       );
       setFinalScore(response.data.final_score);
     } catch (error) {
@@ -31,12 +33,10 @@ export default function Simulate() {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setSimulateScore(prevVal => {
-      return{
-        ...prevVal,
-        [name]:value
-      }
-    });
+    setSimulateScore((prevVal) => ({
+      ...prevVal,
+      [name]: value,
+    }));
   };
 
   return (
@@ -127,6 +127,7 @@ export default function Simulate() {
         statement={"Predicted Credit Score :"}
         information={finalScore}
       />
+      <LoanRecommender creditScore={finalScore} />
     </>
   );
 }

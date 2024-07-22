@@ -4,6 +4,7 @@ import axios from "axios";
 import ResultDisplay from "./ResultDisplay";
 import LoanCard from "./LoanCard";
 import DataPiece from "./DataPiece";
+import LoanRecommender from "./LoanRecommender";
 
 export default function FormCredit() {
   const [isValid, setIsValid] = useState(false);
@@ -56,12 +57,26 @@ export default function FormCredit() {
 
     try {
       const response = await axios.post("http://localhost:9000/creditScorePredictor", predictorData);
-      setCreditScorePredictor(response.data.credit_score); // Assuming the response contains the predicted credit score
+      setCreditScorePredictor(Math.floor(response.data.credit_score)); // Assuming the response contains the predicted credit score
     } catch (error) {
       console.error("Error sending credit score data:", error);
     }
   };
 
+  const countStatuses = (payments) => {
+    let onTimeCount = 0;
+    let missedCount = 0;
+
+    payments.forEach(payment => {
+      if (payment.status === "on-time") {
+        onTimeCount++;
+      } else if (payment.status === "missed") {
+        missedCount++;
+      }
+    });
+
+    return { onTimeCount, missedCount };
+  };
 
   return (
     <>
@@ -124,7 +139,10 @@ export default function FormCredit() {
                 />
                 <DataPiece
                   title="On-Time Or Missed"
-                  info={JSON.stringify(customerDetails.on_time_payments_or_missed)}
+                  info={
+                    "On-time: " + countStatuses(customerDetails.on_time_payments_or_missed).onTimeCount +
+                    ", Missed: " + countStatuses(customerDetails.on_time_payments_or_missed).missedCount
+                  }
                 />
                 <DataPiece
                   title="Current Debt Amt"
@@ -157,7 +175,7 @@ export default function FormCredit() {
           </div>
           {creditInput.alert}
           <ResultDisplay statement={"Your CIBIL Score Is:"} information={creditScorePredictor} />
-          <LoanCard />
+          <LoanRecommender creditScore={creditScorePredictor} />
         </>
       )}
     </>
