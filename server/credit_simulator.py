@@ -38,17 +38,17 @@ class CreditScoreSimulator:
         elif number_of_accounts < 2:
             self.credit_score -= 10
 
-    def simulate(self, data):
+    def simulate_condition(self, data):
         if 'on_time' in data and 'missed' in data:
-            self.apply_payment_history(data['on_time'], data['missed'])
+            self.apply_payment_history(int(data['on_time']), int(data['missed']))
         if 'debt' in data and 'limit' in data:
-            self.apply_credit_utilization(data['debt'], data['limit'])
+            self.apply_credit_utilization(int(data['debt']), int(data['limit']))
         if 'age' in data:
-            self.apply_length_of_credit_history(data['age'])
+            self.apply_length_of_credit_history(int(data['age']))
         if 'inquiries' in data:
-            self.apply_new_credit(data['inquiries'])
+            self.apply_new_credit(int(data['inquiries']))
         if 'accounts' in data:
-            self.apply_credit_mix(data['accounts'])
+            self.apply_credit_mix(int(data['accounts']))
 
         return self.credit_score
 
@@ -56,7 +56,7 @@ class CreditScoreSimulator:
 def simulate():
     data = request.json
     simulator = CreditScoreSimulator()
-    final_score = simulator.simulate(data)
+    final_score = simulator.simulate_condition(data)
     return jsonify({'final_score': final_score})
 
 # if __name__ == '__main__':

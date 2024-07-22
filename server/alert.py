@@ -98,11 +98,11 @@ def admin_dashboard():
 
             alert = None
             if is_npa(max_overdue_days, dti, fico, pub_rec, loan_statuses):
-                alert = 'red'
+                alert = 'NPA'
             elif max_overdue_days >= ALERT_THRESHOLDS['orange']:
-                alert = 'orange'
+                alert = 'Critical'
             elif max_overdue_days >= ALERT_THRESHOLDS['yellow']:
-                alert = 'yellow'
+                alert = 'Initial'
             else:
                 alert = 'green'
             
@@ -161,11 +161,11 @@ def customer_dashboard():
 
         alert = None
         if is_npa(max_overdue_days, dti, fico, pub_rec, loan_statuses):
-            alert = 'red'
+            alert = 'NPA'
         elif max_overdue_days >= ALERT_THRESHOLDS['orange']:
-            alert = 'orange'
+            alert = 'Critical'
         elif max_overdue_days >= ALERT_THRESHOLDS['yellow']:
-            alert = 'yellow'
+            alert = 'Initial'
         
         current_debt_amount = customer.get('current_debt_amount', 0)
         log_annual_income = customer.get('log_annual_inc', 0)
