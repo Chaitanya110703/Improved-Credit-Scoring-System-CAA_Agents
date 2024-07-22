@@ -10,8 +10,12 @@ export default function About() {
          <span className="text-info">About Us</span><hr/>
         </h1>
         <div className="col-md-12 d-flex justify-content-center">
-            <div className="col-md-8">
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga atque alias impedit deserunt magnam quis unde itaque similique deleniti eaque possimus enim suscipit quam assumenda laboriosam veniam mollitia, repudiandae amet?</p>
+            <div className="col-md-8 ">
+                <p> We developed this Web Application for credit Score prediction and simulator.
+                <br />
+                <br/>
+                Our credit scoring and loan prediction system uses technologies like AI and machine learning for monitoring and calculating credit scores. It can gives you loan predictions and suggestions for credit management plans to boost your credit score.  Our system provide features like credit score monitoring, alerts, predict loan offers and debt management plans to help you improve your credit score. By analyzing the relationship between credit scores and NPAs (Non-Performing Assets), we highlight the significance of keeping a strong credit history.
+                </p>
             </div>
         </div>
       </div>

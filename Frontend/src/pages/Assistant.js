@@ -13,7 +13,7 @@ export default function Assistant() {
         <div className="d-flex justify-content-end">
           <Chatbot />
           <div className="col-md-2 d-flex">
-            <span className="text-danger fs-6 fw-lighter">*Warning*:- Change of page will result in loss of chat history</span>
+            <span className="text-danger fs-6 fw-lighter">*Warning*:- Changing the current page will result in loss of chat history</span>
           </div>
         </div>
       </div>
