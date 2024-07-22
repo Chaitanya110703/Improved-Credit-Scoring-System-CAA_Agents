@@ -34,7 +34,7 @@ export default function WarningTable(props) {
                         )?.due_date_current_debt
                       }
                     </td>
-                    <td>{alert.alert}</td>
+                    <td>{alert.alert} &nbsp;Warning</td>
                   </tr>
                 ))
               ) : (

@@ -6,13 +6,13 @@ import LoanRecommender from "./LoanRecommender";
 
 export default function Simulate() {
   const [simulateScore, setSimulateScore] = useState({
-    on_time: "",
-    missed: "",
-    debt: "",
-    limit: "",
-    age: "",
-    inquiries: "",
-    accounts: "",
+    on_time:  0,
+    missed: 0,
+    debt:0 ,
+    limit:0 ,
+    age: 0,
+    inquiries: 0,
+    accounts: 0 ,
   });
 
   const [finalScore, setFinalScore] = useState(null);
@@ -33,10 +33,13 @@ export default function Simulate() {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
+    const intValue = parseInt(value,10);
+    if (!isNaN(intValue)) {
     setSimulateScore((prevVal) => ({
       ...prevVal,
-      [name]: value,
+      [name]: intValue,
     }));
+  }
   };
 
   return (

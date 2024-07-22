@@ -33,7 +33,7 @@ export default function CustomerTable(props) {
                   </td>
                   <td>
                     {resultData.alerts[index]
-                      ? resultData.alerts[index].alert
+                      ? resultData.alerts[index].alert + " Warning"
                       : "No Alert"}
                   </td>
                 </tr>

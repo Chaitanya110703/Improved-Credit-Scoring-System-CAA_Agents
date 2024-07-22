@@ -40,7 +40,7 @@ export default function AdminPanel() {
 
   const filteredAlerts =
     resultData?.alerts?.filter((alert) =>
-      ["yellow", "orange", "red"].includes(alert.alert)
+      ["Initial", "Critical", "NPA"].includes(alert.alert)
     ) || [];
 
   const bgStyle = null;

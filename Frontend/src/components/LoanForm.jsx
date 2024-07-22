@@ -206,7 +206,9 @@ export default function LoanForm() {
           </form>
         </div>
       </div>
-      {scoreOutput ? (
+      {
+      // scoreOutput ? (
+      
         scoreOutput ? (
           <ResultDisplay
             statement={"You Are Eligible For Loan"}
@@ -218,12 +220,13 @@ export default function LoanForm() {
             information={"NOT ELIGIBLE"}
           />
         )
-      ) : (
-        <ResultDisplay
-          statement={"Know Your Credit Score by Entering Details In Above Form"}
-          information={""}
-        />
-      )}
+      // ) : (
+      //   <ResultDisplay
+      //     statement={"Know Your Credit Score by Entering Details In Above Form"}
+      //     information={""}
+      //   />
+      // )
+      }
     </>
   );
 }
