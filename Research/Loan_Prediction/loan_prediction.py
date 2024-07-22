@@ -7,8 +7,8 @@ app = Flask(__name__)
 CORS(app)
 
 
-model = joblib.load('Research\Loan_Prediction\loan_prediction_2.joblib')
-scaler = joblib.load('Research\Loan_Prediction\loan_scaler_2.joblib')
+model = joblib.load('loan_prediction_2.joblib')
+scaler = joblib.load('loan_scaler_2.joblib')
 
 @app.route('/predict', methods=['POST'])
 def predict():

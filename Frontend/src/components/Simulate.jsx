@@ -6,46 +6,46 @@ import ResultDisplay from "./ResultDisplay";
 export default function Simulate() {
   const [simulateScore, setSimulateScore] = useState({
     actions: [
-      {
-        type: "payment_history",
-        params: {
-          on_time: "",
-          missed: "",
+        {
+            type: "payment_history",
+            params: {
+                on_time: "",
+                missed: ""
+            }
         },
-      },
-      {
-        type: "credit_utilization",
-        params: {
-          debt: "",
-          limit: "",
+        {
+            type: "credit_utilization",
+            params: {
+                debt: "",
+                limit: ""
+            }
         },
-      },
-      {
-        type: "credit_history_length",
-        params: {
-          age: "",
+        {
+            type: "credit_history_length",
+            params: {
+                age: ""
+            }
         },
-      },
-      {
-        type: "new_credit",
-        params: {
-          inquiries: "",
+        {
+            type: "new_credit",
+            params: {
+                inquiries: ""
+            }
         },
-      },
-      {
-        type: "credit_mix",
-        params: {
-          accounts: "",
-        },
-      },
-    ],
-  });
+        {
+            type: "credit_mix",
+            params: {
+                accounts: ""
+            }
+        }
+    ]
+});
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "hhtp://localhost:8000/simulate",
+        "http://localhost:9000/simulate",
         simulateScore
       );
       setSimulateScore(response.data.final_score);
