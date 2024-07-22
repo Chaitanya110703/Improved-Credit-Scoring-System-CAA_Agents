@@ -41,6 +41,8 @@ export default function Simulate() {
     ]
 });
 
+  const [finalScore, setFinalScore] = useState(null);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -48,21 +50,37 @@ export default function Simulate() {
         "http://localhost:9000/simulate",
         simulateScore
       );
-      setSimulateScore(response.data.final_score);
+      setFinalScore(response.data.final_score);
       console.log(response.data);
     } catch (error) {
       console.error("ERROR", error);
     }
   };
-  function handleChange(event) {
+
+  const handleChange = (event) => {
     const { name, value } = event.target;
-    setSimulateScore((preVal) => {
+
+    setSimulateScore((prevVal) => {
+      const updatedActions = prevVal.actions.map(action => {
+        if (action.params[name] !== undefined) {
+          return {
+            ...action,
+            params: {
+              ...action.params,
+              [name]: value
+            }
+          };
+        }
+        return action;
+      });
+
       return {
-        ...preVal,
-        [name]: value,
+        ...prevVal,
+        actions: updatedActions
       };
     });
-  }
+  };
+
   return (
     <>
       <div className="d-flex justify-content-center">
@@ -78,7 +96,6 @@ export default function Simulate() {
                       name="on_time"
                       onChange={handleChange}
                     />
-                    {/* <h5>{simulateScore.on_time}</h5> */}
                   </div>
                   <div className="col-md-4 border p-1">
                     <FormInput
@@ -92,7 +109,7 @@ export default function Simulate() {
                 <div className="col-md-12 d-flex justify-content-evenly p-3">
                   <div className="col-md-4 border p-1">
                     <FormInput
-                      label="Current Depts"
+                      label="Current Debt"
                       type="number"
                       name="debt"
                       onChange={handleChange}
@@ -110,7 +127,7 @@ export default function Simulate() {
                 <div className="col-md-12 d-flex justify-content-evenly p-3">
                   <div className="col-md-4 border p-1">
                     <FormInput
-                      label="Account Age(years) :"
+                      label="Account Age (years) :"
                       type="number"
                       name="age"
                       onChange={handleChange}
@@ -125,11 +142,10 @@ export default function Simulate() {
                     />
                   </div>
                 </div>
-
                 <div className="col-md-12 d-flex justify-content-around p-3">
                   <div className="col-md-4 border p-1">
                     <FormInput
-                      label="No. of Credit Accounts :"
+                      label="Number of Credit Accounts :"
                       type="number"
                       name="accounts"
                       onChange={handleChange}
@@ -147,7 +163,7 @@ export default function Simulate() {
           </form>
         </div>
       </div>
-      <ResultDisplay statement={"Predicted Credit Score :"} information={"580"}/>
+      <ResultDisplay statement={"Predicted Credit Score :"} information={finalScore} />
     </>
   );
 }
