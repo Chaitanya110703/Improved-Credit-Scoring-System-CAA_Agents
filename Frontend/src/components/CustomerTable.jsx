@@ -19,8 +19,8 @@ export default function CustomerTable(props) {
             </tr>
           </thead>
           <tbody>
-            {resultLength > 0 ? (
-              resultData.customerDetails.map((customer, index) => (
+            {resultData.customerDetails.length > 0 ? (
+              resultData.customerDetails.flat().map((customer, index) => (
                 <tr key={index}>
                   <th scope="row">{index + 1}</th>
                   <td>{customer.Customer_Name}</td>
