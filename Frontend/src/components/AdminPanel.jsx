@@ -6,9 +6,9 @@ export default function AdminPanel() {
   const [isValid, setIsValid] = useState(false);
   const [creditInput, setCreditInput] = useState({
     Admin_Name: "",
+    Password: "",
   });
-  const [resultData, setResultData] = useState();
-
+  // const [resultData, setResultData] = useState([]);
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -17,8 +17,7 @@ export default function AdminPanel() {
         "http://localhost:9000/admin",
         creditInput
       );
-      setResultData(response.data.Customer_Info);
-      setIsValid(response.data.Customer_Info.isValid === "true");
+      setCreditInput(response.data);
     } catch (error) {
       console.error("Error", error);
     }
@@ -35,12 +34,6 @@ export default function AdminPanel() {
     });
   }
 
-  const filteredAlerts =
-    resultData?.alerts?.filter((alert) =>
-      ["yellow", "orange", "red"].includes(alert.alert)
-    ) || [];
-
-    const bgStyle = null;
   return (
     <>
       <div className="d-flex justify-content-center">
@@ -82,7 +75,7 @@ export default function AdminPanel() {
           </form>
         </div>
       </div>
-      {isValid && resultData && (
+      {isValid ? (
         <div className="mt-5 d-flex justify-content-center">
           <div className="col-md-11 border p-3 bg-body-secondary rounded-4">
             <div className="col-md-12 d-flex justify-content-between">
@@ -98,38 +91,11 @@ export default function AdminPanel() {
               <div className="col-md-10">
                 <h3 className="py-3 text-danger">WARNINGS :</h3>
                 <div className="col-md-8">
-                  <table>
-                    <thead>
-                      <tr>
-                        <th>Sr.</th>
-                        <th>Defaulter Name</th>
-                        <th>Current Debt Amount</th>
-                        <th>Over Due Date</th>
-                        <th>Status</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {filteredAlerts.map((alert, index) => (
-                        <tr key={index}>
-                          <th>{index + 1}</th>
-                          <td>{alert.customer}</td>
-                          <td>{alert.current_debt_amount}</td>
-                          <td>
-                            {
-                              resultData.customerDetails.find(
-                                (customer) =>
-                                  customer.Customer_Name === alert.customer
-                              )?.due_date_current_debt
-
-                              
-                            }
-                          </td>
-                          
-                          <td style={{backgroundColor: bgStyle ? alert.alert : ""}}>{alert.alert}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
+                  <ul>
+                    <li>Yeh mera scam</li>
+                    <li>Yeh mera scam</li>
+                    <li>Yeh mera scam</li>
+                  </ul>
                 </div>
               </div>
             </div>
@@ -138,44 +104,34 @@ export default function AdminPanel() {
             <div className="d-flex justify-content-center">
               <div className="col-md-10">
                 <h3 className="py-3">All Customers</h3>
-                <table className="table table-bordered">
+                <table class="table table-bordered">
                   <thead>
                     <tr>
                       <th scope="col">Sr.</th>
                       <th scope="col">Customer Name</th>
                       <th scope="col">Due Date Of Current Installments</th>
-                      <th scope="col">Current Installment Amount</th>
+                      <th scope="col">current Installment Amount</th>
                       <th scope="col">Status of Overdue</th>
                       <th scope="col">Alert</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {resultData.customerDetails ? (
-                      resultData.customerDetails.map((customer, index) => (
-                        <tr key={index}>
-                          <th scope="row">{index + 1}</th>
-                          <td>{customer.Customer_Name}</td>
-                          <td>{customer.due_date_current_debt}</td>
-                          <td>{customer.installment}</td>
-                          <td>
-                            {customer.overdue_days_years.days > 0
-                              ? "Overdue"
-                              : "On Time"}
-                          </td>
-                          <td>
-                            {resultData.alerts[index]
-                              ? resultData.alerts[index].alert
-                              : "No Alert"}
-                          </td>
-                        </tr>
-                      ))
-                    ) : (
-                      <tr>
-                        <td colSpan="6" className="text-center">
-                          No data available
-                        </td>
-                      </tr>
-                    )}
+                    <tr>
+                      <th scope="row">1</th>
+                      <td>Mark</td>
+                      <td>Otto</td>
+                      <td>@mdo</td>
+                      <td>@mdo</td>
+                      <td>@mdo</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">1</th>
+                      <td>Mark</td>
+                      <td>Otto</td>
+                      <td>@mdo</td>
+                      <td>@mdo</td>
+                      <td>@mdo</td>
+                    </tr>
                   </tbody>
                 </table>
               </div>
@@ -184,6 +140,8 @@ export default function AdminPanel() {
             <hr />
           </div>
         </div>
+      ) : (
+        ""
       )}
     </>
   );

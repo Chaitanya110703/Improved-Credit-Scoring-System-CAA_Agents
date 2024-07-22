@@ -56,13 +56,12 @@ export default function FormCredit() {
 
     try {
       const response = await axios.post("http://localhost:9000/creditScorePredictor", predictorData);
-      setCreditScorePredictor(Math.floor(response.data.credit_score)); // Assuming the response contains the predicted credit score
+      setCreditScorePredictor(response.data.credit_score); // Assuming the response contains the predicted credit score
     } catch (error) {
       console.error("Error sending credit score data:", error);
     }
   };
 
-  
 
   return (
     <>
