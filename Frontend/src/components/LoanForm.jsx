@@ -114,6 +114,7 @@ export default function LoanForm() {
                         label="Income (per anum)"
                         type="number"
                         name="income"
+                        id="income"
                         placeholder=""
                         onChange={handleChange}
                       />
@@ -137,7 +138,7 @@ export default function LoanForm() {
                             onChange={handleChange}
                             required
                           />
-                          <label htmlFor="Graduate" className="form-label">
+                          <label htmlFor="Yes" className="form-label">
                             YES
                           </label>
                         </div>
@@ -151,7 +152,7 @@ export default function LoanForm() {
                             onChange={handleChange}
                             required
                           />
-                          <label htmlFor="NonGraduate" className="form-label">
+                          <label htmlFor="No" className="form-label">
                             NO
                           </label>
                         </div>

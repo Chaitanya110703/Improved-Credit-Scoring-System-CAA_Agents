@@ -110,7 +110,7 @@ export default function AdminPanel() {
             <CustomerTable
               resultData={resultData}
               resultLength={resultData.customerDetails.length}
-            />
+            />                                      
             <br />
             <hr />
           </div>
