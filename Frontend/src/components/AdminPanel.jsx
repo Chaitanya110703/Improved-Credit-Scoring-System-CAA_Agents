@@ -17,7 +17,7 @@ export default function AdminPanel() {
 
     try {
       const response = await axios.post(
-        "http://localhost:9000/admin",
+        `${process.env.REACT_APP_BASE_URL}/admin`,
         creditInput
       );
       // Flatten the customerDetails array
