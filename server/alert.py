@@ -5,7 +5,7 @@ from datetime import datetime
 import numpy as np
 from bson import ObjectId
 
-app = Flask(__name__)
+app = Flask(_name_)
 CORS(app)
 
 # Connect to MongoDB
@@ -115,7 +115,7 @@ def admin_dashboard():
             
             
         admin_json = {
-            "customerDetails": [convert_to_serializable(customer)],
+            "customerDetails": [convert_to_serializable(customers)],
             "alerts" : alerts,
             "isValid": isValid
         }
@@ -186,5 +186,5 @@ def customer_dashboard():
         print(f"Error in customer_dashboard: {e}")
         return jsonify({"error": str(e)}), 500
 
-# if __name__ == '__main__':
+# if _name_ == '_main_':
 #     app.run(debug=True, port=9000)
