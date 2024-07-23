@@ -5,7 +5,7 @@ from datetime import datetime
 import numpy as np
 from bson import ObjectId
 
-app = Flask(_name_)
+app = Flask(__name__)
 CORS(app)
 
 # Connect to MongoDB
