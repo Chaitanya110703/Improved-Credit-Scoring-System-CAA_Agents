@@ -9,7 +9,7 @@ app = Flask(__name__)
 CORS(app)
 
 # Connect to MongoDB
-client = MongoClient('mongodb://localhost:27017/')
+client = MongoClient('mongodb+srv://CAA:CAA@cluster0.ysjuzpr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
 db = client['CreditScoreDb']
 customers_collection = db['customers']
 admins_collection = db['admins']

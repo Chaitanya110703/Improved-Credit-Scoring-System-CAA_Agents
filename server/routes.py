@@ -8,7 +8,7 @@ from flask import Flask, send_from_directory
 app = Flask(__name__, static_folder='../frontend/build')
 CORS(app)  # Enable CORS for all routes
 
-app.config["MONGO_URI"] = "mongodb://localhost:27017/credit_db"
+app.config["MONGO_URI"] = "mongodb+srv://CAA:CAA@cluster0.ysjuzpr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 mongodb_client = PyMongo(app)
 db = mongodb_client.db
 
