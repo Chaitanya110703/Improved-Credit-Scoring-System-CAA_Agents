@@ -17,7 +17,7 @@ export default function FormCredit() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:9000/customer", creditInput);
+      const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/customer`, creditInput);
       setCreditInput(response.data);
       setIsValid(response.data.isValid);
       if (response.data.customerDetails && response.data.customerDetails.length > 0) {

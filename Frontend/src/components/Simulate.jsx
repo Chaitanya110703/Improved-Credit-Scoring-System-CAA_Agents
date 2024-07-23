@@ -22,7 +22,7 @@ export default function Simulate() {
     console.log("Submitting simulation data:", simulateScore); // Debug log
     try {
       const response = await axios.post(
-        "http://localhost:9000/simulate",
+        `${process.env.REACT_APP_BASE_URL}/simulate`,
         simulateScore // Send simulateScore directly
       );
       console.log("Response data:", response.data); // Debug log

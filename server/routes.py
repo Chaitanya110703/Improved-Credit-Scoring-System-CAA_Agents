@@ -3,8 +3,9 @@ from flask_cors import CORS
 from flask_pymongo import PyMongo
 import joblib
 import numpy as np
+from flask import Flask, send_from_directory
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='../frontend/build')
 CORS(app)  # Enable CORS for all routes
 
 app.config["MONGO_URI"] = "mongodb://localhost:27017/credit_db"
@@ -18,6 +19,15 @@ from Credit_Score import predict_credit_score
 from Loan_Prediction import predict
 from alert import customer_dashboard,admin_dashboard
 from Loan_Recommender import get_loan_rates
+
+@app.route('/')
+def serve():
+    return send_from_directory(app.static_folder, 'index.html')
+
+@app.route('/<path:path>')
+def static_proxy(path):
+    # send_static_file will guess the correct MIME type
+    return send_from_directory(app.static_folder, path)
 
 @app.route('/chat', methods=['POST'])
 def chat_route():

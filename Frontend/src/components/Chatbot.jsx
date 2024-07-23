@@ -14,7 +14,7 @@ export default function Chatbot() {
     setChatMessages(newMessages);
 
     try {
-      const response = await axios.post("http://localhost:9000/chat", { message: userInput });
+      const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/chat`, { message: userInput });
       setChatMessages([
         ...newMessages,
         { sender: "bot", text: response.data.response },

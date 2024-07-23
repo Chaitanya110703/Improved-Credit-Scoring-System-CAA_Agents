@@ -31,7 +31,7 @@ export default function LoanForm() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:9000/loanEligibility",
+        `${process.env.REACT_APP_BASE_URL}/loanEligibility`,
         creditInput
       );
       setScoreOutput(response.data.prediction);
